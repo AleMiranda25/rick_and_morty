@@ -1,17 +1,34 @@
+import { useState } from "react";
 import styles from "./SearchBar.module.css";
-import { BsSearchHeart } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 
-export default function SearchBar(props) {
-  const { onSearch } = props;
+export default function SearchBar({ onSearch }) {
+  const [id, setId] = useState();
+
+  const handleChange = (e) => {
+    setId(e.target.value);
+  };
+
+  const onClear = () => {
+    setId("");
+  };
+
   return (
-    <div className={styles.topnav}>
-      <a className={styles.active}>Home</a>
-      <a>About</a>
-      <a>Favorites</a>
-      <button onClick={onSearch}>
-        <BsSearchHeart />
+    <div className={styles.searchBar}>
+      <button
+        onClick={() => {
+          onSearch(id);
+          onClear();
+        }}
+      >
+        <BsSearch />
       </button>
-      <input type="search" placeholder="Search" />
+      <input
+        type="search"
+        onChange={handleChange}
+        value={id}
+        placeholder="Search"
+      />
     </div>
   );
 }
